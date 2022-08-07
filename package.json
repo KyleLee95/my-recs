@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@prisma/client": "^4.1.1",
     "@trpc/client": "^9.26.2",

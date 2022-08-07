@@ -41,6 +41,10 @@ interface MapMarkerType {
   lng: number
 }
 
+interface MapProps {
+  center: google.maps.LatLngLiteral | undefined
+}
+
 const mapMarkers = [
   { id: 0, lat: 41.850033, lng: -87.6500523 },
   { id: 1, lat: 41.850033, lng: -87.9500523 },
@@ -49,24 +53,32 @@ const mapMarkers = [
   { id: 4, lat: 42.350033, lng: -87.9500523 }
 ]
 
-export const Map = () => {
+export const Map = ({ center }: MapProps) => {
   const render = (status: Status) => {
     return <h1>{status}</h1>
   }
-  return (
-    <div style={{ height: '50vh', width: '100vw' }}>
-      <Wrapper
-        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-        render={render}
-      >
-        <div>Map</div>
-        <MapRenderer center={{ lat: 41.850033, lng: -87.6500523 }} zoom={10}>
-          {mapMarkers.map((marker: MapMarkerType) => {
-            const { id, lat, lng } = marker
-            return <Marker key={id} position={{ lat, lng }} />
-          })}
-        </MapRenderer>
-      </Wrapper>
-    </div>
-  )
+
+  // const chicagoLatLong = { lat: 41.850033, lng: -87.6500523 }
+  // const center = { lat: 39.123, lng: -86.5 }
+  if (!center) {
+    return <div>loading...</div>
+  } else {
+    return (
+      <div style={{ height: '50vh', width: '100vw' }}>
+        <Wrapper
+          apiKey={''}
+          // process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+          render={render}
+        >
+          <div>Map</div>
+          <MapRenderer center={center} zoom={10}>
+            {mapMarkers.map((marker: MapMarkerType) => {
+              const { id, lat, lng } = marker
+              return <Marker key={id} position={{ lat, lng }} />
+            })}
+          </MapRenderer>
+        </Wrapper>
+      </div>
+    )
+  }
 }
